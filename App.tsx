@@ -10,7 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 
 // Import Screens
-import { Index } from './src/screens/Index';
+// import { Index } from './src/screens/Index';
 import { Products } from './src/screens/Shared/Products';
 import { Login } from './src/screens/AuthScreens/Login';
 import { Register } from './src/screens/AuthScreens/Register';
@@ -68,7 +68,7 @@ const AppNavigator = () => {
       {!user ? (
         // Public Routes (Not Logged In)
         <>
-          <Stack.Screen name="Index" component={Index} />
+          {/* <Stack.Screen name="Index" component={Index} /> */}
           <Stack.Screen name="Products" component={Products} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
@@ -89,7 +89,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="HowItWorks" component={HowItWorks} />
           <Stack.Screen name="Contact" component={Contact} />
-          <Stack.Screen name="Index" component={Index} />
+          {/* <Stack.Screen name="Index" component={Index} /> */}
         </>
       ) : (
         // Protected Seller/Farmer Routes
@@ -101,7 +101,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="HowItWorks" component={HowItWorks} />
           <Stack.Screen name="Contact" component={Contact} />
-          <Stack.Screen name="Index" component={Index} />
+          {/* <Stack.Screen name="Index" component={Index} /> */}
         </>
       )}
       
