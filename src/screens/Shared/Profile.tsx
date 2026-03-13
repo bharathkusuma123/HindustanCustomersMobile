@@ -332,7 +332,7 @@ export const Profile = () => {
 
               {/* Pincode & Location */}
               <View className="flex-row gap-3">
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-sm text-muted-foreground mb-1">Pincode</Text>
                   <TextInput
                     value={form.pincode}
@@ -345,7 +345,7 @@ export const Profile = () => {
                     }`}
                   />
                 </View>
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-sm text-muted-foreground mb-1">Taluk</Text>
                   <TextInput
                     value={form.taluk}
@@ -399,7 +399,7 @@ export const Profile = () => {
                   </View>
 
                   <View className="flex-row gap-3">
-                    <View className="flex-1">
+                    <View style={{ flex: 1 }}>
                       <Text className="text-sm text-muted-foreground mb-1">Vehicle Type</Text>
                       <TextInput
                         value={form.vehicle_type}
@@ -410,7 +410,7 @@ export const Profile = () => {
                         }`}
                       />
                     </View>
-                    <View className="flex-1">
+                    <View style={{ flex: 1 }}>
                       <Text className="text-sm text-muted-foreground mb-1">Vehicle Count</Text>
                       <TextInput
                         value={form.vehicle_count}

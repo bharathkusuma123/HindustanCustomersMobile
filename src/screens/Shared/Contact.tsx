@@ -60,7 +60,7 @@ export const Contact = () => {
                   <View className="w-12 h-12 bg-[#f5b82e]/20 rounded-full items-center justify-center mr-4">
                     <Phone size={24} color="#f5b82e" />
                   </View>
-                  <View className="flex-1">
+                  <View style={{ flex: 1 }}>
                     <Text className="text-sm text-muted-foreground">Call Us</Text>
                     <Text className="text-lg font-semibold text-foreground">
                       +91 9972763655
@@ -80,7 +80,7 @@ export const Contact = () => {
                   <View className="w-12 h-12 bg-[#f5b82e]/20 rounded-full items-center justify-center mr-4">
                     <Mail size={24} color="#f5b82e" />
                   </View>
-                  <View className="flex-1">
+                  <View style={{ flex: 1 }}>
                     <Text className="text-sm text-muted-foreground">Email Us</Text>
                     <Text className="text-lg font-semibold text-foreground">
                       contact@hindustanproteins.com
@@ -100,7 +100,7 @@ export const Contact = () => {
                   <View className="w-12 h-12 bg-[#f5b82e]/20 rounded-full items-center justify-center mr-4">
                     <MapPin size={24} color="#f5b82e" />
                   </View>
-                  <View className="flex-1">
+                  <View style={{ flex: 1 }}>
                     <Text className="text-sm text-muted-foreground">Visit Us</Text>
                     <Text className="text-base font-semibold text-foreground">
                       No. 853, 1st Floor, Bhavani Nilaya,{'\n'}

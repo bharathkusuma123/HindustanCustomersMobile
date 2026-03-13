@@ -33,7 +33,7 @@ export const Footer = () => {
           <View className="space-y-4">
             <View className="flex-row items-center gap-3">
               <Image
-                source={require('@/assets/Hindustan-logo.png')}
+                source={require('../../../assets/Hindustan-logo.png')}
                 className="h-14 w-auto aspect-square"
                 resizeMode="contain"
               />

@@ -268,7 +268,7 @@ export const CreateOrder = () => {
           <View>
             <Text className="text-lg font-semibold mb-4">Order Details</Text>
             <View className="flex-row gap-4">
-              <View className="flex-1">
+              <View style={{ flex: 1 }}>
                 <Text className="text-sm text-muted-foreground mb-1">Weight Range</Text>
                 <TextInput
                   value={activeProduct?.weight_range || ""}
@@ -276,7 +276,7 @@ export const CreateOrder = () => {
                   className="bg-gray-100 rounded-xl px-4 py-3 text-gray-800"
                 />
               </View>
-              <View className="flex-1">
+              <View style={{ flex: 1 }}>
                 <Text className="text-sm text-muted-foreground mb-1">Quantity</Text>
                 <TextInput
                   value={form.quantity}

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 import { Phone, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react-native';
 import { API_BASE_URL } from '../../config/api';
 import { useAuth } from '../../context/AuthContext';

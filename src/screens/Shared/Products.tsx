@@ -155,7 +155,7 @@ export const Products = () => {
               </View>
 
               <View className="flex-row items-center gap-4">
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <select
                     value={filters.sortBy}
                     onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}

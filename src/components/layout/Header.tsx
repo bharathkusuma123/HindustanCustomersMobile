@@ -101,7 +101,7 @@ export const Header = () => {
         {/* Logo */}
         <Link href="/" className="flex-row items-center gap-2">
           <Image
-            source={require('@/assets/Hindustan-logo.png')}
+            source={require('../../../assets/Hindustan-logo.png')}
             className="w-12 h-12"
             resizeMode="contain"
           />

@@ -159,7 +159,7 @@ export const AddProduct = () => {
 
             {/* Price & Min Order */}
             <View className="flex-row gap-4">
-              <View className="flex-1">
+              <View style={{ flex: 1 }}>
                 <Text className="text-sm font-medium mb-2">Price (per quintal)</Text>
                 <View className="relative">
                   <View className="absolute left-3 top-3 z-10">
@@ -175,7 +175,7 @@ export const AddProduct = () => {
                 </View>
               </View>
 
-              <View className="flex-1">
+              <View style={{ flex: 1 }}>
                 <Text className="text-sm font-medium mb-2">Min Order (quintals)</Text>
                 <TextInput
                   value={form.min_order}

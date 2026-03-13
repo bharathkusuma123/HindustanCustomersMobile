@@ -308,7 +308,7 @@ export const Register = () => {
 
               {/* PAN & Aadhar */}
               <View className="flex-row gap-3">
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-white/80 mb-2">PAN Number *</Text>
                   <TextInput
                     value={formData.pan_number}
@@ -318,7 +318,7 @@ export const Register = () => {
                     className="p-3 bg-white/10 border border-white/20 rounded-lg text-white"
                   />
                 </View>
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-white/80 mb-2">Aadhar Number *</Text>
                   <TextInput
                     value={formData.aadhar_number}
@@ -431,7 +431,7 @@ export const Register = () => {
 
               {/* State & District (read-only) */}
               <View className="flex-row gap-3">
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-white/80 mb-2">State</Text>
                   <TextInput
                     value={formData.state}
@@ -439,7 +439,7 @@ export const Register = () => {
                     className="p-3 bg-white/20 border border-white/20 rounded-lg text-white"
                   />
                 </View>
-                <View className="flex-1">
+                <View style={{ flex: 1 }}>
                   <Text className="text-white/80 mb-2">District</Text>
                   <TextInput
                     value={formData.district}
