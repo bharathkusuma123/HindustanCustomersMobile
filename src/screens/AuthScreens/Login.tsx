@@ -109,7 +109,7 @@ export const Login = () => {
             {/* Logo */}
             <View className="items-center mb-6">
               <Image
-                source={require('../../assets/Hindustan-logo.png')}
+                source={require('../../../assets/Hindustan-logo.jpeg')}
                 className="h-16 w-16"
                 resizeMode="contain"
               />

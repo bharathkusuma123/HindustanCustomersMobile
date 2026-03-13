@@ -10,8 +10,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../../components/layout/Header';
 import { Footer } from '../../components/layout/Footer';
-import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
+import { Card } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react-native';
 
 export const Contact = () => {

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 import { Eye, EyeOff, Phone, Lock, Mail, MapPin, User, FileText } from 'lucide-react-native';
 import { API_BASE_URL } from '../../config/api';
 
@@ -175,7 +175,7 @@ export const Register = () => {
             {/* Logo */}
             <View className="items-center mb-6">
               <Image
-                source={require('../../assets/Hindustan-logo.png')}
+                source={require('../../../assets/Hindustan-logo.png')}
                 className="h-16 w-16"
                 resizeMode="contain"
               />

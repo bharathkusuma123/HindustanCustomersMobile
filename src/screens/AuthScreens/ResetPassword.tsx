@@ -85,7 +85,7 @@ export const ResetPassword = () => {
         <View className="flex-1 justify-center px-6">
           <View className="bg-card rounded-2xl p-8 shadow-xl items-center">
             <Image
-              source={require('../../assets/Hindustan-logo.png')}
+              source={require('../../../assets/Hindustan-logo.png')}
               className="h-16 w-16 mb-6"
               resizeMode="contain"
             />
@@ -126,7 +126,7 @@ export const ResetPassword = () => {
         <View className="flex-1 justify-center px-6">
           <View className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8">
             <Image
-              source={require('../../assets/Hindustan-logo.png')}
+              source={require('../../../assets/Hindustan-logo.png')}
               className="h-16 w-16 self-center mb-6"
               resizeMode="contain"
             />

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 import { Mail, ArrowRight, RotateCw } from 'lucide-react-native';
 import { API_BASE_URL } from '../../config/api';
 
@@ -66,7 +66,7 @@ export const ForgotPassword = () => {
         <View className="flex-1 justify-center px-6">
           <View className="bg-card rounded-2xl p-8 shadow-xl">
             <Image
-              source={require('../../assets/Hindustan-logo.png')}
+              source={require('../../../assets/Hindustan-logo.png')}
               className="h-16 w-16 self-center mb-6"
               resizeMode="contain"
             />
@@ -125,7 +125,7 @@ export const ForgotPassword = () => {
         <View className="flex-1 justify-center px-6">
           <View className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8">
             <Image
-              source={require('../../assets/Hindustan-logo.png')}
+              source={require('../../../assets/Hindustan-logo.png')}
               className="h-16 w-16 self-center mb-6"
               resizeMode="contain"
             />

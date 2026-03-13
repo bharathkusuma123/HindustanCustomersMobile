@@ -10,8 +10,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Header } from '../../components/layout/Header';
-import { Button } from '../../components/ui/Button';
-import { Badge } from '../../components/ui/Badge';
+import { Button } from '../../components/ui/button';
+import { Badge } from '../../components/ui/badge';
 import { Package, MapPin, Truck, IndianRupee, X, Plus } from 'lucide-react-native';
 import { API_BASE_URL } from '../../config/api';
 import { useAuth } from '../../context/AuthContext';

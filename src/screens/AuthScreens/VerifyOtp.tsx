@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 import { Phone, ArrowLeft, ArrowRight, Shield, CheckCircle } from 'lucide-react-native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -142,7 +142,7 @@ export const VerifyOtp = () => {
           {/* Logo */}
           <View className="items-center mb-6">
             <Image
-              source={require('../../assets/Hindustan-logo.png')}
+              source={require('../../../assets/Hindustan-logo.png')}
               className="h-20 w-20"
               resizeMode="contain"
             />
