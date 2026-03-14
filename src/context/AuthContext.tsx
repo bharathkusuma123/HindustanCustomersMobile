@@ -116,7 +116,7 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   loading: boolean;
-  login: (token: string, user: User) => Promise<void>;
+ login: (token: string | null, user: User) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -155,34 +155,28 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const login = async (token: string, user: User) => {
-    try {
-      // Ensure token is a string
-      const tokenString = String(token);
-      
-      // Ensure user is properly stringified
-      const userString = JSON.stringify(user);
-      
-      // Validate that we're not storing empty values
-      if (!tokenString || tokenString === 'undefined' || tokenString === 'null') {
-        throw new Error('Invalid token');
-      }
-      
-      if (!userString || userString === 'undefined' || userString === 'null') {
-        throw new Error('Invalid user data');
-      }
-
-      await SecureStore.setItemAsync("auth_token", tokenString);
-      await SecureStore.setItemAsync("auth_user", userString);
-
-      setToken(token);
-      setUser(user);
-      
-      console.log("Login successful - data stored"); // Debug log
-    } catch (error) {
-      console.log("Login save error", error);
+ const login = async (token: string | null, user: User) => {
+  try {
+    if (!user) {
+      throw new Error("Invalid user data");
     }
-  };
+
+    const userString = JSON.stringify(user);
+
+    await SecureStore.setItemAsync("auth_user", userString);
+
+    if (token) {
+      await SecureStore.setItemAsync("auth_token", token);
+      setToken(token);
+    }
+
+    setUser(user);
+
+    console.log("Login successful - user stored");
+  } catch (error) {
+    console.log("Login save error", error);
+  }
+};
 
   const logout = async () => {
     try {

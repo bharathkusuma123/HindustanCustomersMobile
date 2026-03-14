@@ -13,8 +13,13 @@
 // - Real device: use your computer's IP address
 
 
-export const API_BASE_URL = "http://192.168.1.2:5000/api";
-export const SERVER_BASE_URL = "http://192.168.1.2:5000";
+//Bharath IP address for testing:
+// export const API_BASE_URL = "http://192.168.1.2:5000/api";
+// export const SERVER_BASE_URL = "http://192.168.1.2:5000";
+
+//Mani IP address for testing:
+export const API_BASE_URL = "http://192.168.1.10:5000/api";
+export const SERVER_BASE_URL = "http://192.168.1.10:5000";
 
 
 

@@ -980,17 +980,18 @@ export const Login = () => {
       });
 
       const data = await response.json();
+      
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
 
-      if (!data.token || !data.user) {
+      if (!data.user) {
         throw new Error("Invalid response from server");
       }
 
       navigationAttempted.current = false;
-      await authLogin(data.token, data.user);
+    await authLogin(null, data.user);
 
     } catch (err: any) {
       console.log("Login error:", err);
