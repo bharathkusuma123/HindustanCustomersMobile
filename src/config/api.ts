@@ -13,5 +13,35 @@
 // - Real device: use your computer's IP address
 
 
-export const API_BASE_URL = "http://localhost:5000/api";
-export const SERVER_BASE_URL = "http://localhost:5000";
+export const API_BASE_URL = "http://192.168.1.2:5000/api";
+export const SERVER_BASE_URL = "http://192.168.1.2:5000";
+
+
+
+// In your config file where you have these exports
+// import { Platform } from 'react-native';
+
+// const getBaseUrl = () => {
+//   if (__DEV__) {
+//     // Development environment
+//     if (Platform.OS === 'android') {
+//       return 'http://10.0.2.2:5000'; // Android emulator
+//     } else if (Platform.OS === 'ios') {
+//       return 'http://localhost:5000'; // iOS simulator
+//     } else {
+//       return 'http://localhost:5000'; // Web or other
+//     }
+//   } else {
+//     // Production environment
+//     return 'https://your-production-domain.com';
+//   }
+// };
+
+// const BASE_URL = getBaseUrl();
+// export const API_BASE_URL = `${BASE_URL}/api`;
+// export const SERVER_BASE_URL = BASE_URL;
+
+
+
+// export const API_BASE_URL = "http://192.168.1.2/api";
+// export const SERVER_BASE_URL = "http://10.0.2.2:5000";

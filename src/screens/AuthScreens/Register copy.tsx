@@ -514,707 +514,6 @@
 
 
 
-// import React, { useState } from 'react';
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   Image,
-//   ScrollView,
-//   Alert,
-//   ActivityIndicator,
-//   StyleSheet,
-// } from 'react-native';
-// import { SafeAreaView } from 'react-native-safe-area-context';
-// import { useNavigation } from '@react-navigation/native';
-// import { Button } from '../../components/ui/button';
-// import { Eye, EyeOff, Phone, Lock, Mail, MapPin, User, FileText } from 'lucide-react-native';
-// import { API_BASE_URL } from '../../config/api';
-
-// // List of Karnataka taluks
-// const KARNATAKA_TALUKS = [
-//   "Bangalore North", "Bangalore South", "Bangalore East", "Bangalore West", "Anekal",
-//   "Devanahalli", "Doddaballapura", "Hosakote", "Nelamangala",
-//   "Athani", "Bailhongal", "Belagavi", "Chikkodi", "Gokak", "Hukkeri", "Khanapur", "Raibag", "Ramdurg", "Saundatti",
-//   "Heggadadevanakote", "Hunsur", "Krishnarajanagara", "Mysuru", "Nanjangud", "Piriyapatna", "T.Narsipur",
-//   "Chiknayakanhalli", "Gubbi", "Koratagere", "Kunigal", "Madhugiri", "Pavagada", "Sira", "Tiptur", "Tumakuru", "Turuvekere",
-//   "Hubballi", "Dharwad", "Kalghatgi", "Kundgol", "Navalgund",
-//   "Bantwal", "Belthangady", "Mangaluru", "Puttur", "Sullia",
-//   "Bagalkot", "Ballari", "Bidar", "Chamarajanagar", "Chikkamagaluru", "Chitradurga",
-//   "Dakshina Kannada", "Davangere", "Gadag", "Hassan", "Haveri", "Kodagu", "Kolar",
-//   "Koppal", "Mandya", "Raichur", "Ramanagara", "Shivamogga", "Udupi", "Uttara Kannada",
-//   "Vijayapura", "Vijayanagara", "Yadgir"
-// ];
-
-// export const Register = () => {
-//   const navigation = useNavigation();
-//   const [loading, setLoading] = useState(false);
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [isCustomTaluk, setIsCustomTaluk] = useState(false);
-//   const [formData, setFormData] = useState({
-//     proprietor_name: "",
-//     trading_name: "",
-//     proprietor_mobile: "",
-//     alternative_mobile: "",
-//     email: "",
-//     pan_number: "",
-//     aadhar_number: "",
-//     gst_number: "",
-//     taluk: "",
-//     address_line1: "",
-//     address_line2: "",
-//     pincode: "",
-//     state: "",
-//     district: "",
-//     vehicle_type: "",
-//     vehicle_count: "",
-//     role: "BUYER",
-//     user_type: "Proprietor",
-//     password: "",
-//   });
-
-//   const handleChange = (field: string, value: string) => {
-//     setFormData(prev => ({ ...prev, [field]: value }));
-//   };
-
-//   const fetchPincodeDetails = async (pincode: string) => {
-//     if (pincode.length !== 6) return;
-
-//     try {
-//       const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-//       const data = await res.json();
-
-//       if (data[0].Status === "Success") {
-//         const postOffice = data[0].PostOffice[0];
-//         setFormData(prev => ({
-//           ...prev,
-//           state: postOffice.State,
-//           district: postOffice.District,
-//           taluk: postOffice.Block || postOffice.Name
-//         }));
-//       }
-//     } catch (err) {
-//       console.error("Pincode fetch failed");
-//     }
-//   };
-
-//   const validateForm = () => {
-//     const errors = [];
-
-//     // Email validation
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!formData.email) {
-//       errors.push("Email is required");
-//     } else if (!emailRegex.test(formData.email)) {
-//       errors.push("Please enter a valid email address");
-//     }
-
-//     // GST validation for Seller
-//     if (formData.role === "SELLER" && !formData.gst_number) {
-//       errors.push("GST number is mandatory for Seller");
-//     }
-
-//     // Mobile validation
-//     const mobileRegex = /^[6-9]\d{9}$/;
-//     if (!mobileRegex.test(formData.proprietor_mobile)) {
-//       errors.push("Please enter a valid 10-digit mobile number");
-//     }
-
-//     return errors;
-//   };
-
-//   const handleSubmit = async () => {
-//     const errors = validateForm();
-//     if (errors.length > 0) {
-//       Alert.alert("Validation Error", errors.join("\n"));
-//       return;
-//     }
-
-//     try {
-//       setLoading(true);
-//          console.log('API URL:', `${API_BASE_URL}/users/add-user`);
-//     console.log('Request Data:', JSON.stringify(formData, null, 2));
-
-//       const response = await fetch(`${API_BASE_URL}/users/add-user`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(formData),
-//       });
-//         console.log('Response Status:', response.status);
-
-//       const data = await response.json();
-//          console.log('Response Data:', data);
-
-//       if (!response.ok) {
-//         throw new Error(data.message || "Registration failed");
-//       }
-
-//       Alert.alert(
-//         "Success",
-//         "Registration successful! Please verify your mobile number.",
-//         [
-//           {
-//             text: "OK",
-//             onPress: () => {
-//               navigation.navigate('VerifyOtp', {
-//                 mobile: formData.proprietor_mobile,
-//                 userData: {
-//                   role: formData.role,
-//                   user_id: data.user_id,
-//                 },
-//                 fromRegistration: true
-//               });
-//             }
-//           }
-//         ]
-//       );
-
-//     } catch (err: any) {
-//           console.error('Full error:', err); // Log the complete error
-
-//       Alert.alert("Error", err.message || "Something went wrong");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <ScrollView style={styles.scrollView}>
-//         {/* Background Image */}
-//         <Image
-//           source={{ uri: 'https://plus.unsplash.com/premium_photo-1661834559466-63eea5f1d858?q=80&w=1157' }}
-//           style={styles.backgroundImage}
-//           resizeMode="cover"
-//         />
-
-//         {/* Dark Overlay */}
-//         <View style={styles.overlay} />
-
-//         {/* Content */}
-//         <View style={styles.content}>
-//           <View style={styles.card}>
-//             {/* Logo */}
-//             <View style={styles.logoContainer}>
-//               <Image
-//                 source={require('../../../assets/Hindustan-logo.png')}
-//                 style={styles.logo}
-//                 resizeMode="contain"
-//               />
-//               <Text style={styles.logoText}>
-//                 Hindustan Proteins
-//               </Text>
-//               <Text style={styles.title}>Create Account</Text>
-//               <Text style={styles.subtitle}>Start trading with us</Text>
-//             </View>
-
-//             {/* Form */}
-//             <View style={styles.form}>
-//               {/* Role Selection */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Register As *</Text>
-//                 <View style={styles.roleContainer}>
-//                   {['BUYER', 'SELLER', 'FARMER'].map((role) => (
-//                     <TouchableOpacity
-//                       key={role}
-//                       onPress={() => handleChange('role', role)}
-//                       style={[
-//                         styles.roleButton,
-//                         formData.role === role && styles.roleButtonActive,
-//                       ]}
-//                     >
-//                       <Text style={[
-//                         styles.roleButtonText,
-//                         formData.role === role && styles.roleButtonTextActive,
-//                       ]}>
-//                         {role}
-//                       </Text>
-//                     </TouchableOpacity>
-//                   ))}
-//                 </View>
-//               </View>
-
-//               {/* Proprietor Name */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Proprietor / Partner Name *</Text>
-//                 <View style={styles.inputWrapper}>
-//                   <View style={styles.iconContainer}>
-//                     <User size={18} color="#fff" />
-//                   </View>
-//                   <TextInput
-//                     value={formData.proprietor_name}
-//                     onChangeText={(text) => handleChange('proprietor_name', text)}
-//                     placeholder="Enter full name"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     style={styles.inputWithIcon}
-//                   />
-//                 </View>
-//               </View>
-
-//               {/* Trading Name */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Trading Name *</Text>
-//                 <TextInput
-//                   value={formData.trading_name}
-//                   onChangeText={(text) => handleChange('trading_name', text)}
-//                   placeholder="Enter business name"
-//                   placeholderTextColor="rgba(255,255,255,0.6)"
-//                   style={styles.input}
-//                 />
-//               </View>
-
-//               {/* Mobile */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Mobile Number *</Text>
-//                 <View style={styles.inputWrapper}>
-//                   <View style={styles.iconContainer}>
-//                     <Phone size={18} color="#fff" />
-//                   </View>
-//                   <TextInput
-//                     value={formData.proprietor_mobile}
-//                     onChangeText={(text) => handleChange('proprietor_mobile', text)}
-//                     placeholder="10-digit mobile number"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     keyboardType="phone-pad"
-//                     maxLength={10}
-//                     style={styles.inputWithIcon}
-//                   />
-//                 </View>
-//               </View>
-
-//               {/* Email */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Email Address *</Text>
-//                 <View style={styles.inputWrapper}>
-//                   <View style={styles.iconContainer}>
-//                     <Mail size={18} color="#fff" />
-//                   </View>
-//                   <TextInput
-//                     value={formData.email}
-//                     onChangeText={(text) => handleChange('email', text)}
-//                     placeholder="Enter email address"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     keyboardType="email-address"
-//                     style={styles.inputWithIcon}
-//                   />
-//                 </View>
-//               </View>
-
-//               {/* Password */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Password *</Text>
-//                 <View style={styles.inputWrapper}>
-//                   <View style={styles.iconContainer}>
-//                     <Lock size={18} color="#fff" />
-//                   </View>
-//                   <TextInput
-//                     value={formData.password}
-//                     onChangeText={(text) => handleChange('password', text)}
-//                     placeholder="Create password"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     secureTextEntry={!showPassword}
-//                     style={[styles.inputWithIcon, styles.inputWithRightIcon]}
-//                   />
-//                   <TouchableOpacity
-//                     onPress={() => setShowPassword(!showPassword)}
-//                     style={styles.eyeIcon}
-//                   >
-//                     {showPassword ? (
-//                       <EyeOff size={18} color="#fff" />
-//                     ) : (
-//                       <Eye size={18} color="#fff" />
-//                     )}
-//                   </TouchableOpacity>
-//                 </View>
-//               </View>
-
-//               {/* PAN & Aadhar */}
-//               <View style={styles.row}>
-//                 <View style={styles.flex1}>
-//                   <Text style={styles.label}>PAN Number *</Text>
-//                   <TextInput
-//                     value={formData.pan_number}
-//                     onChangeText={(text) => handleChange('pan_number', text)}
-//                     placeholder="ABCDE1234F"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     style={styles.input}
-//                   />
-//                 </View>
-//                 <View style={styles.flex1}>
-//                   <Text style={styles.label}>Aadhar Number *</Text>
-//                   <TextInput
-//                     value={formData.aadhar_number}
-//                     onChangeText={(text) => handleChange('aadhar_number', text)}
-//                     placeholder="12-digit Aadhar"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     maxLength={12}
-//                     style={styles.input}
-//                   />
-//                 </View>
-//               </View>
-
-//               {/* GST for Seller */}
-//               {formData.role === "SELLER" && (
-//                 <View style={styles.inputGroup}>
-//                   <Text style={styles.label}>GST Number *</Text>
-//                   <TextInput
-//                     value={formData.gst_number}
-//                     onChangeText={(text) => handleChange('gst_number', text)}
-//                     placeholder="15-character GSTIN"
-//                     placeholderTextColor="rgba(255,255,255,0.6)"
-//                     style={styles.input}
-//                   />
-//                 </View>
-//               )}
-
-//               {/* Taluk for Seller/Farmer */}
-//               {(formData.role === "SELLER" || formData.role === "FARMER") && (
-//                 <View style={styles.inputGroup}>
-//                   <Text style={styles.label}>Taluk *</Text>
-//                   {!isCustomTaluk ? (
-//                     <>
-//                       <TouchableOpacity
-//                         onPress={() => {
-//                           const currentIndex = KARNATAKA_TALUKS.indexOf(formData.taluk);
-//                           const nextIndex = (currentIndex + 1) % KARNATAKA_TALUKS.length;
-//                           handleChange('taluk', KARNATAKA_TALUKS[nextIndex]);
-//                         }}
-//                         style={styles.selectButton}
-//                       >
-//                         <Text style={styles.selectButtonText}>
-//                           {formData.taluk || "Select Taluk"}
-//                         </Text>
-//                       </TouchableOpacity>
-//                       <TouchableOpacity
-//                         onPress={() => setIsCustomTaluk(true)}
-//                         style={styles.customTalukLink}
-//                       >
-//                         <Text style={styles.customTalukLinkText}>Can't find your taluk?</Text>
-//                       </TouchableOpacity>
-//                     </>
-//                   ) : (
-//                     <View>
-//                       <TextInput
-//                         value={formData.taluk}
-//                         onChangeText={(text) => handleChange('taluk', text)}
-//                         placeholder="Enter your taluk"
-//                         placeholderTextColor="rgba(255,255,255,0.6)"
-//                         style={styles.input}
-//                       />
-//                       <TouchableOpacity
-//                         onPress={() => setIsCustomTaluk(false)}
-//                         style={styles.customTalukLink}
-//                       >
-//                         <Text style={styles.customTalukLinkText}>← Back to list</Text>
-//                       </TouchableOpacity>
-//                     </View>
-//                   )}
-//                 </View>
-//               )}
-
-//               {/* Address */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Address Line 1 *</Text>
-//                 <TextInput
-//                   value={formData.address_line1}
-//                   onChangeText={(text) => handleChange('address_line1', text)}
-//                   placeholder="House/Shop number, street"
-//                   placeholderTextColor="rgba(255,255,255,0.6)"
-//                   style={styles.input}
-//                 />
-//               </View>
-
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Address Line 2</Text>
-//                 <TextInput
-//                   value={formData.address_line2}
-//                   onChangeText={(text) => handleChange('address_line2', text)}
-//                   placeholder="Area, landmark (optional)"
-//                   placeholderTextColor="rgba(255,255,255,0.6)"
-//                   style={styles.input}
-//                 />
-//               </View>
-
-//               {/* Pincode */}
-//               <View style={styles.inputGroup}>
-//                 <Text style={styles.label}>Pincode *</Text>
-//                 <TextInput
-//                   value={formData.pincode}
-//                   onChangeText={(text) => {
-//                     handleChange('pincode', text);
-//                     fetchPincodeDetails(text);
-//                   }}
-//                   placeholder="6-digit pincode"
-//                   placeholderTextColor="rgba(255,255,255,0.6)"
-//                   keyboardType="numeric"
-//                   maxLength={6}
-//                   style={styles.input}
-//                 />
-//               </View>
-
-//               {/* State & District (read-only) */}
-//               <View style={styles.row}>
-//                 <View style={styles.flex1}>
-//                   <Text style={styles.label}>State</Text>
-//                   <TextInput
-//                     value={formData.state}
-//                     editable={false}
-//                     style={[styles.input, styles.inputDisabled]}
-//                   />
-//                 </View>
-//                 <View style={styles.flex1}>
-//                   <Text style={styles.label}>District</Text>
-//                   <TextInput
-//                     value={formData.district}
-//                     editable={false}
-//                     style={[styles.input, styles.inputDisabled]}
-//                   />
-//                 </View>
-//               </View>
-
-//               {/* Vehicle fields for Buyer */}
-//               {formData.role === "BUYER" && (
-//                 <>
-//                   <View style={styles.inputGroup}>
-//                     <Text style={styles.label}>Vehicle Type</Text>
-//                     <TouchableOpacity
-//                       onPress={() => {
-//                         const types = ["", "Canter", "Bolero", "Tata Ace", "Others"];
-//                         const currentIndex = types.indexOf(formData.vehicle_type);
-//                         const nextIndex = (currentIndex + 1) % types.length;
-//                         handleChange('vehicle_type', types[nextIndex]);
-//                       }}
-//                       style={styles.selectButton}
-//                     >
-//                       <Text style={styles.selectButtonText}>
-//                         {formData.vehicle_type || "Select vehicle type"}
-//                       </Text>
-//                     </TouchableOpacity>
-//                   </View>
-
-//                   <View style={styles.inputGroup}>
-//                     <Text style={styles.label}>Number of Vehicles</Text>
-//                     <TextInput
-//                       value={formData.vehicle_count}
-//                       onChangeText={(text) => handleChange('vehicle_count', text)}
-//                       placeholder="e.g. 2"
-//                       placeholderTextColor="rgba(255,255,255,0.6)"
-//                       keyboardType="numeric"
-//                       style={styles.input}
-//                     />
-//                   </View>
-//                 </>
-//               )}
-
-//               {/* Submit Button */}
-//               <TouchableOpacity
-//                 onPress={handleSubmit}
-//                 disabled={loading}
-//                 style={styles.submitButton}
-//               >
-//                 {loading ? (
-//                   <ActivityIndicator color="#000" />
-//                 ) : (
-//                   <Text style={styles.submitButtonText}>
-//                     Create Account
-//                   </Text>
-//                 )}
-//               </TouchableOpacity>
-//             </View>
-
-//             {/* Login Link */}
-//             <View style={styles.loginLinkContainer}>
-//               <Text style={styles.loginLinkText}>Already have an account? </Text>
-//               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-//                 <Text style={styles.loginLink}>Sign in</Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         </View>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   scrollView: {
-//     flex: 1,
-//     position: 'relative',
-//   },
-//   backgroundImage: {
-//     position: 'absolute',
-//     width: '100%',
-//     height: '100%',
-//   },
-//   overlay: {
-//     position: 'absolute',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: '#1f4d36',
-//     opacity: 0.9,
-//   },
-//   content: {
-//     padding: 24,
-//   },
-//   card: {
-//     backgroundColor: 'rgba(255,255,255,0.1)',
-//     borderRadius: 16,
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,0.2)',
-//     padding: 24,
-//   },
-//   logoContainer: {
-//     alignItems: 'center',
-//     marginBottom: 24,
-//   },
-//   logo: {
-//     width: 64,
-//     height: 64,
-//   },
-//   logoText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     color: '#f5b82e',
-//     marginTop: 8,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     color: '#fff',
-//     marginTop: 16,
-//   },
-//   subtitle: {
-//     color: 'rgba(255,255,255,0.7)',
-//   },
-//   form: {
-//     gap: 16,
-//   },
-//   inputGroup: {
-//     marginBottom: 4,
-//   },
-//   label: {
-//     color: 'rgba(255,255,255,0.8)',
-//     marginBottom: 8,
-//   },
-//   input: {
-//     padding: 12,
-//     backgroundColor: 'rgba(255,255,255,0.1)',
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,0.2)',
-//     borderRadius: 8,
-//     color: '#fff',
-//   },
-//   inputWrapper: {
-//     position: 'relative',
-//   },
-//   iconContainer: {
-//     position: 'absolute',
-//     left: 12,
-//     top: 12,
-//     zIndex: 10,
-//   },
-//   inputWithIcon: {
-//     paddingLeft: 40,
-//     padding: 12,
-//     backgroundColor: 'rgba(255,255,255,0.1)',
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,0.2)',
-//     borderRadius: 8,
-//     color: '#fff',
-//   },
-//   inputWithRightIcon: {
-//     paddingRight: 40,
-//   },
-//   eyeIcon: {
-//     position: 'absolute',
-//     right: 12,
-//     top: 12,
-//   },
-//   roleContainer: {
-//     flexDirection: 'row',
-//     gap: 12,
-//   },
-//   roleButton: {
-//     flex: 1,
-//     paddingVertical: 12,
-//     borderRadius: 8,
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,0.2)',
-//     backgroundColor: 'rgba(255,255,255,0.1)',
-//   },
-//   roleButtonActive: {
-//     backgroundColor: '#f5b82e',
-//     borderColor: '#f5b82e',
-//   },
-//   roleButtonText: {
-//     textAlign: 'center',
-//     color: '#fff',
-//   },
-//   roleButtonTextActive: {
-//     color: '#000',
-//   },
-//   row: {
-//     flexDirection: 'row',
-//     gap: 12,
-//   },
-//   flex1: {
-//     flex: 1,
-//   },
-//   selectButton: {
-//     padding: 12,
-//     backgroundColor: 'rgba(255,255,255,0.1)',
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,0.2)',
-//     borderRadius: 8,
-//   },
-//   selectButtonText: {
-//     color: '#fff',
-//   },
-//   customTalukLink: {
-//     marginTop: 8,
-//   },
-//   customTalukLinkText: {
-//     color: '#f5b82e',
-//     fontSize: 14,
-//   },
-//   inputDisabled: {
-//     backgroundColor: 'rgba(255,255,255,0.2)',
-//     opacity: 0.7,
-//   },
-//   submitButton: {
-//     backgroundColor: '#f5b82e',
-//     paddingVertical: 16,
-//     borderRadius: 8,
-//     marginTop: 24,
-//   },
-//   submitButtonText: {
-//     color: '#000',
-//     fontWeight: '600',
-//     fontSize: 18,
-//     textAlign: 'center',
-//   },
-//   loginLinkContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     marginTop: 24,
-//   },
-//   loginLinkText: {
-//     color: 'rgba(255,255,255,0.7)',
-//   },
-//   loginLink: {
-//     color: '#f5b82e',
-//     fontWeight: '600',
-//   },
-// });
-
-
-
 import React, { useState } from 'react';
 import {
   View,
@@ -1334,18 +633,18 @@ export const Register = () => {
 
     try {
       setLoading(true);
-      console.log('API URL:', `${API_BASE_URL}/users/add-user`);
-      console.log('Request Data:', JSON.stringify(formData, null, 2));
+         console.log('API URL:', `${API_BASE_URL}/users/add-user`);
+    console.log('Request Data:', JSON.stringify(formData, null, 2));
 
       const response = await fetch(`${API_BASE_URL}/users/add-user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      console.log('Response Status:', response.status);
+        console.log('Response Status:', response.status);
 
       const data = await response.json();
-      console.log('Response Data:', data);
+         console.log('Response Data:', data);
 
       if (!response.ok) {
         throw new Error(data.message || "Registration failed");
@@ -1372,7 +671,8 @@ export const Register = () => {
       );
 
     } catch (err: any) {
-      console.error('Full error:', err); // Log the complete error
+          console.error('Full error:', err); // Log the complete error
+
       Alert.alert("Error", err.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -1381,10 +681,17 @@ export const Register = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.scrollView}>
+        {/* Background Image */}
+        <Image
+          source={{ uri: 'https://plus.unsplash.com/premium_photo-1661834559466-63eea5f1d858?q=80&w=1157' }}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+
+        {/* Dark Overlay */}
+        <View style={styles.overlay} />
+
         {/* Content */}
         <View style={styles.content}>
           <View style={styles.card}>
@@ -1433,13 +740,13 @@ export const Register = () => {
                 <Text style={styles.label}>Proprietor / Partner Name *</Text>
                 <View style={styles.inputWrapper}>
                   <View style={styles.iconContainer}>
-                    <User size={18} color="#6b7280" />
+                    <User size={18} color="#fff" />
                   </View>
                   <TextInput
                     value={formData.proprietor_name}
                     onChangeText={(text) => handleChange('proprietor_name', text)}
                     placeholder="Enter full name"
-                    placeholderTextColor="#9ca3af"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     style={styles.inputWithIcon}
                   />
                 </View>
@@ -1452,7 +759,7 @@ export const Register = () => {
                   value={formData.trading_name}
                   onChangeText={(text) => handleChange('trading_name', text)}
                   placeholder="Enter business name"
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor="rgba(255,255,255,0.6)"
                   style={styles.input}
                 />
               </View>
@@ -1462,13 +769,13 @@ export const Register = () => {
                 <Text style={styles.label}>Mobile Number *</Text>
                 <View style={styles.inputWrapper}>
                   <View style={styles.iconContainer}>
-                    <Phone size={18} color="#6b7280" />
+                    <Phone size={18} color="#fff" />
                   </View>
                   <TextInput
                     value={formData.proprietor_mobile}
                     onChangeText={(text) => handleChange('proprietor_mobile', text)}
                     placeholder="10-digit mobile number"
-                    placeholderTextColor="#9ca3af"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     keyboardType="phone-pad"
                     maxLength={10}
                     style={styles.inputWithIcon}
@@ -1481,15 +788,14 @@ export const Register = () => {
                 <Text style={styles.label}>Email Address *</Text>
                 <View style={styles.inputWrapper}>
                   <View style={styles.iconContainer}>
-                    <Mail size={18} color="#6b7280" />
+                    <Mail size={18} color="#fff" />
                   </View>
                   <TextInput
                     value={formData.email}
                     onChangeText={(text) => handleChange('email', text)}
                     placeholder="Enter email address"
-                    placeholderTextColor="#9ca3af"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     keyboardType="email-address"
-                    autoCapitalize="none"
                     style={styles.inputWithIcon}
                   />
                 </View>
@@ -1500,13 +806,13 @@ export const Register = () => {
                 <Text style={styles.label}>Password *</Text>
                 <View style={styles.inputWrapper}>
                   <View style={styles.iconContainer}>
-                    <Lock size={18} color="#6b7280" />
+                    <Lock size={18} color="#fff" />
                   </View>
                   <TextInput
                     value={formData.password}
                     onChangeText={(text) => handleChange('password', text)}
                     placeholder="Create password"
-                    placeholderTextColor="#9ca3af"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     secureTextEntry={!showPassword}
                     style={[styles.inputWithIcon, styles.inputWithRightIcon]}
                   />
@@ -1515,9 +821,9 @@ export const Register = () => {
                     style={styles.eyeIcon}
                   >
                     {showPassword ? (
-                      <EyeOff size={18} color="#6b7280" />
+                      <EyeOff size={18} color="#fff" />
                     ) : (
-                      <Eye size={18} color="#6b7280" />
+                      <Eye size={18} color="#fff" />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -1531,8 +837,7 @@ export const Register = () => {
                     value={formData.pan_number}
                     onChangeText={(text) => handleChange('pan_number', text)}
                     placeholder="ABCDE1234F"
-                    placeholderTextColor="#9ca3af"
-                    autoCapitalize="characters"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     style={styles.input}
                   />
                 </View>
@@ -1542,8 +847,7 @@ export const Register = () => {
                     value={formData.aadhar_number}
                     onChangeText={(text) => handleChange('aadhar_number', text)}
                     placeholder="12-digit Aadhar"
-                    placeholderTextColor="#9ca3af"
-                    keyboardType="numeric"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     maxLength={12}
                     style={styles.input}
                   />
@@ -1558,8 +862,7 @@ export const Register = () => {
                     value={formData.gst_number}
                     onChangeText={(text) => handleChange('gst_number', text)}
                     placeholder="15-character GSTIN"
-                    placeholderTextColor="#9ca3af"
-                    autoCapitalize="characters"
+                    placeholderTextColor="rgba(255,255,255,0.6)"
                     style={styles.input}
                   />
                 </View>
@@ -1579,10 +882,7 @@ export const Register = () => {
                         }}
                         style={styles.selectButton}
                       >
-                        <Text style={[
-                          styles.selectButtonText,
-                          !formData.taluk && styles.selectButtonPlaceholder
-                        ]}>
+                        <Text style={styles.selectButtonText}>
                           {formData.taluk || "Select Taluk"}
                         </Text>
                       </TouchableOpacity>
@@ -1599,7 +899,7 @@ export const Register = () => {
                         value={formData.taluk}
                         onChangeText={(text) => handleChange('taluk', text)}
                         placeholder="Enter your taluk"
-                        placeholderTextColor="#9ca3af"
+                        placeholderTextColor="rgba(255,255,255,0.6)"
                         style={styles.input}
                       />
                       <TouchableOpacity
@@ -1620,7 +920,7 @@ export const Register = () => {
                   value={formData.address_line1}
                   onChangeText={(text) => handleChange('address_line1', text)}
                   placeholder="House/Shop number, street"
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor="rgba(255,255,255,0.6)"
                   style={styles.input}
                 />
               </View>
@@ -1631,7 +931,7 @@ export const Register = () => {
                   value={formData.address_line2}
                   onChangeText={(text) => handleChange('address_line2', text)}
                   placeholder="Area, landmark (optional)"
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor="rgba(255,255,255,0.6)"
                   style={styles.input}
                 />
               </View>
@@ -1646,7 +946,7 @@ export const Register = () => {
                     fetchPincodeDetails(text);
                   }}
                   placeholder="6-digit pincode"
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor="rgba(255,255,255,0.6)"
                   keyboardType="numeric"
                   maxLength={6}
                   style={styles.input}
@@ -1660,8 +960,6 @@ export const Register = () => {
                   <TextInput
                     value={formData.state}
                     editable={false}
-                    placeholder="Auto-fetched"
-                    placeholderTextColor="#9ca3af"
                     style={[styles.input, styles.inputDisabled]}
                   />
                 </View>
@@ -1670,8 +968,6 @@ export const Register = () => {
                   <TextInput
                     value={formData.district}
                     editable={false}
-                    placeholder="Auto-fetched"
-                    placeholderTextColor="#9ca3af"
                     style={[styles.input, styles.inputDisabled]}
                   />
                 </View>
@@ -1691,10 +987,7 @@ export const Register = () => {
                       }}
                       style={styles.selectButton}
                     >
-                      <Text style={[
-                        styles.selectButtonText,
-                        !formData.vehicle_type && styles.selectButtonPlaceholder
-                      ]}>
+                      <Text style={styles.selectButtonText}>
                         {formData.vehicle_type || "Select vehicle type"}
                       </Text>
                     </TouchableOpacity>
@@ -1706,7 +999,7 @@ export const Register = () => {
                       value={formData.vehicle_count}
                       onChangeText={(text) => handleChange('vehicle_count', text)}
                       placeholder="e.g. 2"
-                      placeholderTextColor="#9ca3af"
+                      placeholderTextColor="rgba(255,255,255,0.6)"
                       keyboardType="numeric"
                       style={styles.input}
                     />
@@ -1721,7 +1014,7 @@ export const Register = () => {
                 style={styles.submitButton}
               >
                 {loading ? (
-                  <ActivityIndicator color="#ffffff" />
+                  <ActivityIndicator color="#000" />
                 ) : (
                   <Text style={styles.submitButtonText}>
                     Create Account
@@ -1747,54 +1040,57 @@ export const Register = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    position: 'relative',
+  },
+  backgroundImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#1f4d36',
+    opacity: 0.9,
   },
   content: {
     padding: 24,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: 'rgba(255,255,255,0.2)',
     padding: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   logoContainer: {
     alignItems: 'center',
     marginBottom: 24,
   },
   logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 64,
+    height: 64,
   },
   logoText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1f4d36',
+    color: '#f5b82e',
     marginTop: 8,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1f2937',
+    color: '#fff',
     marginTop: 16,
   },
   subtitle: {
-    color: '#6b7280',
-    fontSize: 16,
+    color: 'rgba(255,255,255,0.7)',
   },
   form: {
     gap: 16,
@@ -1803,18 +1099,16 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   label: {
-    color: '#374151',
+    color: 'rgba(255,255,255,0.8)',
     marginBottom: 8,
-    fontWeight: '500',
   },
   input: {
     padding: 12,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: 'rgba(255,255,255,0.2)',
     borderRadius: 8,
-    color: '#1f2937',
-    fontSize: 16,
+    color: '#fff',
   },
   inputWrapper: {
     position: 'relative',
@@ -1828,12 +1122,11 @@ const styles = StyleSheet.create({
   inputWithIcon: {
     paddingLeft: 40,
     padding: 12,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: 'rgba(255,255,255,0.2)',
     borderRadius: 8,
-    color: '#1f2937',
-    fontSize: 16,
+    color: '#fff',
   },
   inputWithRightIcon: {
     paddingRight: 40,
@@ -1852,20 +1145,19 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    backgroundColor: '#f9fafb',
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.1)',
   },
   roleButtonActive: {
-    backgroundColor: '#1f4d36',
-    borderColor: '#1f4d36',
+    backgroundColor: '#f5b82e',
+    borderColor: '#f5b82e',
   },
   roleButtonText: {
     textAlign: 'center',
-    color: '#4b5563',
-    fontWeight: '500',
+    color: '#fff',
   },
   roleButtonTextActive: {
-    color: '#ffffff',
+    color: '#000',
   },
   row: {
     flexDirection: 'row',
@@ -1876,38 +1168,33 @@ const styles = StyleSheet.create({
   },
   selectButton: {
     padding: 12,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: 'rgba(255,255,255,0.2)',
     borderRadius: 8,
   },
   selectButtonText: {
-    color: '#1f2937',
-    fontSize: 16,
-  },
-  selectButtonPlaceholder: {
-    color: '#9ca3af',
+    color: '#fff',
   },
   customTalukLink: {
     marginTop: 8,
   },
   customTalukLinkText: {
-    color: '#1f4d36',
+    color: '#f5b82e',
     fontSize: 14,
-    fontWeight: '500',
   },
   inputDisabled: {
-    backgroundColor: '#f3f4f6',
-    color: '#6b7280',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    opacity: 0.7,
   },
   submitButton: {
-    backgroundColor: '#1f4d36',
+    backgroundColor: '#f5b82e',
     paddingVertical: 16,
     borderRadius: 8,
     marginTop: 24,
   },
   submitButtonText: {
-    color: '#ffffff',
+    color: '#000',
     fontWeight: '600',
     fontSize: 18,
     textAlign: 'center',
@@ -1918,14 +1205,10 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   loginLinkText: {
-    color: '#6b7280',
-    fontSize: 14,
+    color: 'rgba(255,255,255,0.7)',
   },
   loginLink: {
-    color: '#1f4d36',
+    color: '#f5b82e',
     fontWeight: '600',
-    fontSize: 14,
   },
 });
-
-export default Register;

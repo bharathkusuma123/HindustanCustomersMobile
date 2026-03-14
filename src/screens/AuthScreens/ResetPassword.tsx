@@ -204,8 +204,6 @@
 // };
 
 
-
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -322,16 +320,6 @@ export const ResetPassword = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
-        {/* Background Image */}
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1567326619821-2664df9c48da?q=80&w=1400' }}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-        />
-
-        {/* Dark Overlay */}
-        <View style={styles.overlay} />
-
         <View style={styles.formContainer}>
           <View style={styles.formCard}>
             <Image
@@ -356,13 +344,13 @@ export const ResetPassword = () => {
               <Text style={styles.label}>New Password</Text>
               <View style={styles.inputWrapper}>
                 <View style={styles.iconContainer}>
-                  <Lock size={18} color="#fff" />
+                  <Lock size={18} color="#6b7280" />
                 </View>
                 <TextInput
                   value={password}
                   onChangeText={setPassword}
                   placeholder="Create new password"
-                  placeholderTextColor="rgba(255,255,255,0.6)"
+                  placeholderTextColor="#9ca3af"
                   secureTextEntry={!showPassword}
                   style={[styles.input, styles.inputWithRightIcon]}
                 />
@@ -371,9 +359,9 @@ export const ResetPassword = () => {
                   style={styles.eyeIcon}
                 >
                   {showPassword ? (
-                    <EyeOff size={18} color="#fff" />
+                    <EyeOff size={18} color="#6b7280" />
                   ) : (
-                    <Eye size={18} color="#fff" />
+                    <Eye size={18} color="#6b7280" />
                   )}
                 </TouchableOpacity>
               </View>
@@ -385,13 +373,13 @@ export const ResetPassword = () => {
               style={styles.resetButton}
             >
               {loading ? (
-                <ActivityIndicator color="#000" />
+                <ActivityIndicator color="#ffffff" />
               ) : (
                 <View style={styles.buttonContent}>
                   <Text style={styles.buttonText}>
                     Reset Password
                   </Text>
-                  <ArrowRight size={18} color="#000" />
+                  <ArrowRight size={18} color="#ffffff" />
                 </View>
               )}
             </TouchableOpacity>
@@ -415,24 +403,11 @@ export const ResetPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
   contentContainer: {
     flex: 1,
     position: 'relative',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#1f4d36',
-    opacity: 0.9,
   },
   formContainer: {
     flex: 1,
@@ -440,41 +415,54 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   formCard: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    borderColor: '#e5e7eb',
     padding: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   logo: {
-    width: 64,
-    height: 64,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     alignSelf: 'center',
     marginBottom: 24,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#1f2937',
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.7)',
+    color: '#6b7280',
     textAlign: 'center',
     marginBottom: 8,
+    fontSize: 16,
   },
   timer: {
-    color: '#f5b82e',
+    color: '#1f4d36',
     textAlign: 'center',
     marginBottom: 24,
+    fontWeight: '600',
+    fontSize: 16,
   },
   inputGroup: {
     marginBottom: 24,
   },
   label: {
-    color: 'rgba(255,255,255,0.8)',
+    color: '#374151',
     marginBottom: 8,
+    fontWeight: '500',
   },
   inputWrapper: {
     position: 'relative',
@@ -487,11 +475,12 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 12,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: '#f9fafb',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    borderColor: '#e5e7eb',
     borderRadius: 8,
-    color: '#fff',
+    color: '#1f2937',
+    fontSize: 16,
   },
   inputWithRightIcon: {
     paddingLeft: 40,
@@ -503,7 +492,7 @@ const styles = StyleSheet.create({
     top: 12,
   },
   resetButton: {
-    backgroundColor: '#f5b82e',
+    backgroundColor: '#1f4d36',
     paddingVertical: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -515,24 +504,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: '#000',
+    color: '#ffffff',
     fontWeight: '600',
+    fontSize: 16,
     marginRight: 8,
   },
   backLink: {
     marginTop: 16,
   },
   backLinkText: {
-    color: 'rgba(255,255,255,0.7)',
+    color: '#6b7280',
     textAlign: 'center',
+    fontSize: 14,
   },
   backLinkHighlight: {
-    color: '#f5b82e',
-    fontWeight: '500',
+    color: '#1f4d36',
+    fontWeight: '600',
   },
   expiredContainer: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
   },
   expiredContent: {
     flex: 1,
@@ -540,22 +531,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   expiredCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
     alignItems: 'center',
   },
   expiredLogo: {
-    width: 64,
-    height: 64,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     marginBottom: 24,
   },
   expiredTitle: {
@@ -563,21 +557,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 8,
-    color: '#333',
+    color: '#1f2937',
   },
   expiredMessage: {
-    color: '#666',
+    color: '#6b7280',
     textAlign: 'center',
     marginBottom: 24,
+    fontSize: 16,
   },
   expiredButton: {
-    backgroundColor: '#2B6B3F',
+    backgroundColor: '#1f4d36',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
   },
   expiredButtonText: {
-    color: '#fff',
-    fontWeight: '500',
+    color: '#ffffff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
+
+export default ResetPassword;
