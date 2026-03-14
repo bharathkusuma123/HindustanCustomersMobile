@@ -155,6 +155,217 @@
 //   );
 // }
 
+//=============================================================================
+// all the portals code below 
+
+// import React from "react";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { SafeAreaProvider } from "react-native-safe-area-context";
+// import { StatusBar } from "expo-status-bar";
+// import { View, ActivityIndicator, LogBox, Text } from "react-native";
+// import { GestureHandlerRootView } from "react-native-gesture-handler";
+// import { AuthProvider, useAuth } from "./src/context/AuthContext";
+
+// // Import Screens
+// import { Products } from "./src/screens/Shared/Products";
+// import { Login } from "./src/screens/AuthScreens/Login";
+// import { Register } from "./src/screens/AuthScreens/Register";
+// import { VerifyOtp } from "./src/screens/AuthScreens/VerifyOtp";
+// import { ForgotPassword } from "./src/screens/AuthScreens/ForgotPassword";
+// import { ResetPassword } from "./src/screens/AuthScreens/ResetPassword";
+// import { Profile } from "./src/screens/Shared/Profile";
+// import { HowItWorks } from "./src/screens/Shared/HowItWorks";
+// import { Contact } from "./src/screens/Shared/Contact";
+// import { NotFound } from "./src/screens/NotFound";
+
+// //Buyer Screens
+// import { BuyerDashboard } from "./src/screens/BuyerScreens/BuyerDashboard";
+// import { CreateOrder } from "./src/screens/BuyerScreens/CreateOrder";
+// import { OrderDetails } from "./src/screens/BuyerScreens/OrderDetails";
+
+// //Seller Screens
+// import { SellerDashboard } from "./src/screens/SellerScreens/SellerDashboard";
+// import { AddProduct } from "./src/screens/SellerScreens/AddProduct";
+// import { SellerOrderDetails } from "./src/screens/SellerScreens/SellerOrderDetails";
+
+// // Ignore navigation warning
+// LogBox.ignoreLogs(["Non-serializable values were found in the navigation state"]);
+
+// const queryClient = new QueryClient();
+// const Stack = createNativeStackNavigator();
+
+// const LoadingScreen = () => (
+//   <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#faf7f2" }}>
+//     <ActivityIndicator size="large" color="#2B6B3F" />
+//     <Text style={{ marginTop: 10 }}>Loading Hindustan Proteins...</Text>
+//   </View>
+// );
+
+// // Navigator
+// const AppNavigator = () => {
+//   const { user, loading } = useAuth();
+  
+//   // Get user role from user object
+//   const userRole = user?.role;
+
+//   if (loading) {
+//     return <LoadingScreen />;
+//   }
+
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//         contentStyle: { backgroundColor: "#faf7f2" },
+//         animation: "slide_from_right",
+//       }}
+//     >
+//       {!user ? (
+//         <>
+//           <Stack.Screen name="Products" component={Products} />
+//           <Stack.Screen name="Login" component={Login} />
+//           <Stack.Screen name="Register" component={Register} />
+//           <Stack.Screen name="VerifyOtp" component={VerifyOtp} />
+//           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+//           <Stack.Screen name="ResetPassword" component={ResetPassword} />
+//           <Stack.Screen name="HowItWorks" component={HowItWorks} />
+//           <Stack.Screen name="Contact" component={Contact} />
+//           <Stack.Screen name="Profile" component={Profile} />
+//         </>
+//       ) : userRole === "BUYER" ? (
+//         <>
+//           <Stack.Screen name="BuyerDashboard" component={BuyerDashboard} />
+//           <Stack.Screen name="CreateOrder" component={CreateOrder} />
+//           <Stack.Screen name="OrderDetails" component={OrderDetails} />
+//           <Stack.Screen name="Products" component={Products} />
+//           <Stack.Screen name="Profile" component={Profile} />
+//           <Stack.Screen name="HowItWorks" component={HowItWorks} />
+//           <Stack.Screen name="Contact" component={Contact} />
+//         </>
+//       ) : (
+//         <>
+//           <Stack.Screen name="SellerDashboard" component={SellerDashboard} />
+//           <Stack.Screen name="AddProduct" component={AddProduct} />
+//           <Stack.Screen name="SellerOrderDetails" component={SellerOrderDetails} />
+//           <Stack.Screen name="Products" component={Products} />
+//           <Stack.Screen name="Profile" component={Profile} />
+//           <Stack.Screen name="HowItWorks" component={HowItWorks} />
+//           <Stack.Screen name="Contact" component={Contact} />
+//         </>
+//       )}
+
+//       <Stack.Screen name="NotFound" component={NotFound} />
+//     </Stack.Navigator>
+//   );
+// };
+
+// export default function App() {
+//   return (
+//     <GestureHandlerRootView style={{ flex: 1 }}>
+//       <QueryClientProvider client={queryClient}>
+//         <AuthProvider>
+//           <SafeAreaProvider>
+//             <NavigationContainer>
+//               <StatusBar style="auto" />
+//               <AppNavigator />
+//             </NavigationContainer>
+//           </SafeAreaProvider>
+//         </AuthProvider>
+//       </QueryClientProvider>
+//     </GestureHandlerRootView>
+//   );
+// }
+
+
+
+
+// import React from "react";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { SafeAreaProvider } from "react-native-safe-area-context";
+// import { StatusBar } from "expo-status-bar";
+// import { View, ActivityIndicator, LogBox, Text } from "react-native";
+// import { GestureHandlerRootView } from "react-native-gesture-handler";
+// import { AuthProvider, useAuth } from "./src/context/AuthContext";
+
+// // Import Screens - Only unauthenticated screens
+// import { Products } from "./src/screens/Shared/Products";
+// import { Login } from "./src/screens/AuthScreens/Login";
+// import { Register } from "./src/screens/AuthScreens/Register";
+// import { VerifyOtp } from "./src/screens/AuthScreens/VerifyOtp";
+// import { ForgotPassword } from "./src/screens/AuthScreens/ForgotPassword";
+// import { ResetPassword } from "./src/screens/AuthScreens/ResetPassword";
+// import { Profile } from "./src/screens/Shared/Profile";
+// import { HowItWorks } from "./src/screens/Shared/HowItWorks";
+// import { Contact } from "./src/screens/Shared/Contact";
+// import { NotFound } from "./src/screens/NotFound";
+
+// // Note: Buyer and Seller screens are NOT imported
+
+// // Ignore navigation warning
+// LogBox.ignoreLogs(["Non-serializable values were found in the navigation state"]);
+
+// const queryClient = new QueryClient();
+// const Stack = createNativeStackNavigator();
+
+// const LoadingScreen = () => (
+//   <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#faf7f2" }}>
+//     <ActivityIndicator size="large" color="#2B6B3F" />
+//     <Text style={{ marginTop: 10 }}>Loading Hindustan Proteins...</Text>
+//   </View>
+// );
+
+// // Navigator - Only shows unauthenticated stack regardless of user state
+// const AppNavigator = () => {
+//   const { loading } = useAuth();
+  
+//   if (loading) {
+//     return <LoadingScreen />;
+//   }
+
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//         contentStyle: { backgroundColor: "#faf7f2" },
+//         animation: "slide_from_right",
+//       }}
+//     >
+//       {/* Always show only the unauthenticated screens */}
+//       <Stack.Screen name="Products" component={Products} />
+//       <Stack.Screen name="Login" component={Login} />
+//       <Stack.Screen name="Register" component={Register} />
+//       <Stack.Screen name="VerifyOtp" component={VerifyOtp} />
+//       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+//       <Stack.Screen name="ResetPassword" component={ResetPassword} />
+//       <Stack.Screen name="HowItWorks" component={HowItWorks} />
+//       <Stack.Screen name="Contact" component={Contact} />
+//       <Stack.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="NotFound" component={NotFound} />
+//     </Stack.Navigator>
+//   );
+// };
+
+// export default function App() {
+//   return (
+//     <GestureHandlerRootView style={{ flex: 1 }}>
+//       <QueryClientProvider client={queryClient}>
+//         <AuthProvider>
+//           <SafeAreaProvider>
+//             <NavigationContainer>
+//               <StatusBar style="auto" />
+//               <AppNavigator />
+//             </NavigationContainer>
+//           </SafeAreaProvider>
+//         </AuthProvider>
+//       </QueryClientProvider>
+//     </GestureHandlerRootView>
+//   );
+// }
+
 
 
 
@@ -169,16 +380,16 @@ import { View, ActivityIndicator, LogBox, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AuthProvider, useAuth } from "./src/context/AuthContext";
 
-// Import Screens
-import { Products } from "./src/screens/Shared/Products";
+// Import Screens - Shared screens
+// import { Products } from "./src/screens/Shared/Products";
 import { Login } from "./src/screens/AuthScreens/Login";
 import { Register } from "./src/screens/AuthScreens/Register";
 import { VerifyOtp } from "./src/screens/AuthScreens/VerifyOtp";
 import { ForgotPassword } from "./src/screens/AuthScreens/ForgotPassword";
 import { ResetPassword } from "./src/screens/AuthScreens/ResetPassword";
 import { Profile } from "./src/screens/Shared/Profile";
-import { HowItWorks } from "./src/screens/Shared/HowItWorks";
-import { Contact } from "./src/screens/Shared/Contact";
+// import { HowItWorks } from "./src/screens/Shared/HowItWorks";
+// import { Contact } from "./src/screens/Shared/Contact";
 import { NotFound } from "./src/screens/NotFound";
 
 // Buyer Screens
@@ -200,17 +411,20 @@ const Stack = createNativeStackNavigator();
 const LoadingScreen = () => (
   <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#faf7f2" }}>
     <ActivityIndicator size="large" color="#2B6B3F" />
-    <Text style={{ marginTop: 10 }}>Loading Hindustan Proteins...</Text>
+    <Text style={{ marginTop: 10, fontFamily: 'System' }}>Loading Hindustan Proteins...</Text>
   </View>
 );
 
-// Navigator
+// Main Navigator with role-based routing
 const AppNavigator = () => {
-  const { user, userRole, isLoading } = useAuth();
-
-  if (isLoading) {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
     return <LoadingScreen />;
   }
+
+  // Get user role - default to null if no user
+  const userRole = user?.role;
 
   return (
     <Stack.Navigator
@@ -221,39 +435,43 @@ const AppNavigator = () => {
       }}
     >
       {!user ? (
+        // Unauthenticated Stack
         <>
-          <Stack.Screen name="Products" component={Products} />
+          {/* <Stack.Screen name="Products" component={Products} /> */}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="VerifyOtp" component={VerifyOtp} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
-          <Stack.Screen name="HowItWorks" component={HowItWorks} />
-          <Stack.Screen name="Contact" component={Contact} />
+          {/* <Stack.Screen name="HowItWorks" component={HowItWorks} />
+          <Stack.Screen name="Contact" component={Contact} /> */}
           <Stack.Screen name="Profile" component={Profile} />
         </>
       ) : userRole === "BUYER" ? (
+        // Buyer Stack
         <>
           <Stack.Screen name="BuyerDashboard" component={BuyerDashboard} />
           <Stack.Screen name="CreateOrder" component={CreateOrder} />
           <Stack.Screen name="OrderDetails" component={OrderDetails} />
-          <Stack.Screen name="Products" component={Products} />
+          {/* <Stack.Screen name="Products" component={Products} /> */}
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="HowItWorks" component={HowItWorks} />
-          <Stack.Screen name="Contact" component={Contact} />
+          {/* <Stack.Screen name="HowItWorks" component={HowItWorks} />
+          <Stack.Screen name="Contact" component={Contact} /> */}
         </>
       ) : (
+        // Seller/Farmer Stack
         <>
           <Stack.Screen name="SellerDashboard" component={SellerDashboard} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
           <Stack.Screen name="SellerOrderDetails" component={SellerOrderDetails} />
-          <Stack.Screen name="Products" component={Products} />
+          {/* <Stack.Screen name="Products" component={Products} /> */}
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="HowItWorks" component={HowItWorks} />
-          <Stack.Screen name="Contact" component={Contact} />
+          {/* <Stack.Screen name="HowItWorks" component={HowItWorks} />
+          <Stack.Screen name="Contact" component={Contact} /> */}
         </>
       )}
-
+      
+      {/* NotFound screen should be available to all */}
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
   );
